@@ -2,86 +2,73 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
 import path from "path";
 
+// Absolute path to the JSON file (fs needs a real path, not "@/data/...")
 const dataFilePath = path.join(process.cwd(), "src/data/movies.json");
 
-type Movie = {
-  slug: string;
-  title: string;
-  description_short: string;
-  description_long: string;
-  rating: number | null;
-  type: string;
-  img: string;
-  isTrending: boolean;
-  comingSoon: boolean;
-};
-
-type MoviesFile = {
-  title: string;
-  description_short: string;
-  img: string;
-  isPromoted: boolean;
-  movies: Movie[];
-};
-
-function readMovies(): MoviesFile {
+// Read the current data from disk
+function readMovies() {
   const fileContent = fs.readFileSync(dataFilePath, "utf-8");
   return JSON.parse(fileContent);
 }
 
-function writeMovies(data: MoviesFile) {
+// Overwrite the file with updated data
+function writeMovies(data: any) {
   fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
+}
+
+// Check that the movie object has the right fields and types
+function isValidMovie(movie: any): string | null {
+  if (typeof movie.slug !== "string") return "slug must be a string";
+  if (typeof movie.title !== "string") return "title must be a string";
+  if (typeof movie.description_short !== "string") return "description_short must be a string";
+  if (typeof movie.description_long !== "string") return "description_long must be a string";
+  if (movie.rating !== null && typeof movie.rating !== "number") return "rating must be a number or null";
+  if (typeof movie.type !== "string") return "type must be a string";
+  if (typeof movie.img !== "string") return "img must be a string";
+  if (typeof movie.isTrending !== "boolean") return "isTrending must be a boolean";
+  if (typeof movie.comingSoon !== "boolean") return "comingSoon must be a boolean";
+  return null; // no error
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const data = readMovies();
 
   switch (req.method) {
+    // Return all movies
     case "GET": {
       return res.status(200).json(data.movies);
     }
 
+    // Add a new movie to the list
     case "POST": {
-      const newMovie: Movie = req.body;
+      const error = isValidMovie(req.body);
+      if (error) return res.status(400).json({ message: error });
 
-      const alreadyExists = data.movies.some((m) => m.slug === newMovie.slug);
-      if (alreadyExists) {
-        return res.status(409).json({ message: `Movie with slug "${newMovie.slug}" already exists` });
-      }
-
-      data.movies.push(newMovie);
+      data.movies.push(req.body);
       writeMovies(data);
-      return res.status(201).json(newMovie);
+      return res.status(201).json(req.body);
     }
 
+    // Replace an existing movie (matched by slug)
     case "PUT": {
-      const updatedMovie: Movie = req.body;
-      const index = data.movies.findIndex((m) => m.slug === updatedMovie.slug);
+      const error = isValidMovie(req.body);
+      if (error) return res.status(400).json({ message: error });
 
-      if (index === -1) {
-        return res.status(404).json({ message: `Movie with slug "${updatedMovie.slug}" not found` });
-      }
-
-      data.movies[index] = updatedMovie;
+      const index = data.movies.findIndex((m: any) => m.slug === req.body.slug);
+      data.movies[index] = req.body;
       writeMovies(data);
-      return res.status(200).json(updatedMovie);
+      return res.status(200).json(req.body);
     }
 
+    // Remove a movie (matched by slug)
     case "DELETE": {
-      const { slug } = req.body;
-      const index = data.movies.findIndex((m) => m.slug === slug);
-
-      if (index === -1) {
-        return res.status(404).json({ message: `Movie with slug "${slug}" not found` });
-      }
-
-      data.movies.splice(index, 1);
+      data.movies = data.movies.filter((m: any) => m.slug !== req.body.slug);
       writeMovies(data);
-      return res.status(200).json({ message: `Movie "${slug}" deleted` });
+      return res.status(200).json({ message: `Movie "${req.body.slug}" deleted` });
     }
 
+    // Any other method is not supported
     default: {
-      res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
       return res.status(405).json({ message: `Method ${req.method} not allowed` });
     }
   }
