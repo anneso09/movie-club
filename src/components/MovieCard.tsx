@@ -27,15 +27,27 @@ export default function MovieCard({
   comingSoon,
 }: MovieCardProps) {
   return (
-    <Card sx={{ maxWidth: 300}}>
-      <CardActionArea>
-        <CardMedia
-          component="div"
-          sx={{ position: "relative", height: 400 }}
-        >
-          <Image src={img} alt={title} fill style={{ objectFit: "cover" }} />
+    <Card
+      sx={{
+        maxWidth: 300,
+        height: 600,
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <CardActionArea
+        sx={{ display: "flex", flexDirection: "column", height: "100%" }}
+      >
+        <CardMedia component="div" sx={{ position: "relative", height: 400, width: "100%" }}>
+          <Image
+            src={img}
+            alt={title}
+            fill
+            sizes="(max-width: 600px) 100vw, 300px"
+            style={{ objectFit: "cover" }}
+          />
         </CardMedia>
-        <CardContent>
+        <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
           <Typography gutterBottom variant="h5" component="div">
             {title}
           </Typography>
@@ -44,8 +56,12 @@ export default function MovieCard({
           </Typography>
           <Stack
             direction="row"
-            spacing={1}
-            sx={{ alignItems: "center", justifyContent: "space-between" }}
+            spacing={2}
+            sx={{
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginTop: "auto",
+            }}
           >
             {comingSoon ? (
               <Typography variant="body2" sx={{ color: "secondary.main" }}>
