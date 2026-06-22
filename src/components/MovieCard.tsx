@@ -32,6 +32,7 @@ export default function MovieCard({
   rating,
   type,
   img,
+  isTrending,
   comingSoon,
   onEdit,
   onDelete,
@@ -39,12 +40,27 @@ export default function MovieCard({
   const router = useRouter();
 
   return (
-    <Card sx={{ maxWidth: 300, height: 650, display: "flex", flexDirection: "column" }}>
+    <Card
+      sx={{
+        maxWidth: 300,
+        height: 650,
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <CardActionArea
         onClick={() => router.push(`/movies/${slug}`)}
-        sx={{ display: "flex", flexDirection: "column", height: "100%", alignItems: "stretch" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+          alignItems: "stretch",
+        }}
       >
-        <CardMedia component="div" sx={{ position: "relative", height: 400, width: "100%" }}>
+        <CardMedia
+          component="div"
+          sx={{ position: "relative", height: 400, width: "100%" }}
+        >
           <Image
             src={img}
             alt={title}
@@ -52,6 +68,22 @@ export default function MovieCard({
             sizes="(max-width: 600px) 100vw, 300px"
             style={{ objectFit: "cover" }}
           />
+          <Box
+            sx={{
+              position: "absolute",
+              inset: 8,
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "flex-start",
+            }}
+          >
+          {isTrending && (
+            <Chip
+              label="Trending"
+              color="primary"
+            />
+          )}
+          </Box>    
         </CardMedia>
         <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
           <Typography gutterBottom variant="h5" component="div">
@@ -63,7 +95,11 @@ export default function MovieCard({
           <Stack
             direction="row"
             spacing={2}
-            sx={{ alignItems: "center", justifyContent: "space-between", marginTop: "auto" }}
+            sx={{
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginTop: "auto",
+            }}
           >
             {comingSoon ? (
               <Typography variant="body2" sx={{ color: "secondary.main" }}>
