@@ -6,6 +6,10 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useRouter } from "next/router";
 
 type MovieCardProps = {
@@ -17,6 +21,8 @@ type MovieCardProps = {
   img: string;
   isTrending: boolean;
   comingSoon: boolean;
+  onEdit: () => void;
+  onDelete: () => void;
 };
 
 export default function MovieCard({
@@ -27,19 +33,16 @@ export default function MovieCard({
   type,
   img,
   comingSoon,
+  onEdit,
+  onDelete,
 }: MovieCardProps) {
   const router = useRouter();
+
   return (
-    <Card
-      sx={{
-        maxWidth: 300,
-        height: 600,
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <CardActionArea onClick={() => router.push(`/movies/${slug}`)}
-        sx={{ display: "flex", flexDirection: "column", height: "100%" }}
+    <Card sx={{ maxWidth: 300, height: 650, display: "flex", flexDirection: "column" }}>
+      <CardActionArea
+        onClick={() => router.push(`/movies/${slug}`)}
+        sx={{ display: "flex", flexDirection: "column", height: "100%", alignItems: "stretch" }}
       >
         <CardMedia component="div" sx={{ position: "relative", height: 400, width: "100%" }}>
           <Image
@@ -60,11 +63,7 @@ export default function MovieCard({
           <Stack
             direction="row"
             spacing={2}
-            sx={{
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginTop: "auto",
-            }}
+            sx={{ alignItems: "center", justifyContent: "space-between", marginTop: "auto" }}
           >
             {comingSoon ? (
               <Typography variant="body2" sx={{ color: "secondary.main" }}>
@@ -79,6 +78,30 @@ export default function MovieCard({
           </Stack>
         </CardContent>
       </CardActionArea>
+
+      {/* Boutons Edit + Delete en dehors du CardActionArea */}
+      <Box sx={{ display: "flex", justifyContent: "flex-end", p: 1, gap: 1 }}>
+        <IconButton
+          size="small"
+          color="primary"
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit();
+          }}
+        >
+          <EditIcon fontSize="small" />
+        </IconButton>
+        <IconButton
+          size="small"
+          color="secondary"
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+        >
+          <DeleteIcon fontSize="small" />
+        </IconButton>
+      </Box>
     </Card>
   );
 }
