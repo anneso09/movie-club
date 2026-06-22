@@ -17,7 +17,6 @@ export default function Hero() {
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-        px: 4,
       }}
     >
       <Typography variant="h2" sx={{ mb: 2, fontWeight: 700 }}>
