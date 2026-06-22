@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import { useRouter } from "next/router";
 
 type MovieCardProps = {
   slug: string;
@@ -19,6 +20,7 @@ type MovieCardProps = {
 };
 
 export default function MovieCard({
+  slug,
   title,
   description_short,
   rating,
@@ -26,6 +28,7 @@ export default function MovieCard({
   img,
   comingSoon,
 }: MovieCardProps) {
+  const router = useRouter();
   return (
     <Card
       sx={{
@@ -35,7 +38,7 @@ export default function MovieCard({
         flexDirection: "column",
       }}
     >
-      <CardActionArea
+      <CardActionArea onClick={() => router.push(`/movies/${slug}`)}
         sx={{ display: "flex", flexDirection: "column", height: "100%" }}
       >
         <CardMedia component="div" sx={{ position: "relative", height: 400, width: "100%" }}>
