@@ -10,7 +10,7 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 type MovieCardProps = {
   slug: string;
@@ -37,8 +37,6 @@ export default function MovieCard({
   onEdit,
   onDelete,
 }: MovieCardProps) {
-  const router = useRouter();
-
   return (
     <Card
       sx={{
@@ -49,7 +47,8 @@ export default function MovieCard({
       }}
     >
       <CardActionArea
-        onClick={() => router.push(`/movies/${slug}`)}
+        component={Link}
+        href={`/movies/${slug}`}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -77,13 +76,8 @@ export default function MovieCard({
               alignItems: "flex-start",
             }}
           >
-          {isTrending && (
-            <Chip
-              label="Trending"
-              color="primary"
-            />
-          )}
-          </Box>    
+            {isTrending && <Chip label="Trending" color="primary" />}
+          </Box>
         </CardMedia>
         <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
           <Typography gutterBottom variant="h5" component="div">
