@@ -13,18 +13,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import MovieFormModal from "@/components/MovieFormModal";
-
-type Movie = {
-  slug: string;
-  title: string;
-  description_short: string;
-  description_long: string;
-  rating: number | null;
-  type: string;
-  img: string;
-  isTrending: boolean;
-  comingSoon: boolean;
-};
+import { movieSchema, Movie } from "@/schemas/movie";
 
 export default function Home() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -36,7 +25,21 @@ export default function Home() {
   function fetchMovies() {
     fetch("/api/movies")
       .then((res) => res.json())
-      .then((data) => setMovies(data));
+      .then((data: unknown[]) => {
+        const validMovies: Movie[] = [];
+
+        data.forEach((item) => {
+          const result = movieSchema.safeParse(item);
+          if (result.success) {
+            validMovies.push(result.data);
+          } else {
+            // Le film est invalide → on le log et on l'ignore
+            console.warn("Invalid movie skipped:", item, result.error.format());
+          }
+        });
+
+        setMovies(validMovies);
+      });
   }
 
   useEffect(() => {
@@ -100,8 +103,8 @@ export default function Home() {
         </Box>
 
         <Grid container spacing={4}>
-          {movies.map((movie) => (
-            <Grid size={3} key={movie.slug}>
+          {movies.map((movie, index) => (
+            <Grid size={3} key={index}>
               <MovieCard
                 {...movie}
                 onEdit={() => handleOpenEdit(movie)}
