@@ -104,7 +104,7 @@ export default function Home() {
 
         <Grid container spacing={4}>
           {movies.map((movie, index) => (
-            <Grid size={3} key={index}>
+            <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={index}>
               <MovieCard
                 {...movie}
                 onEdit={() => handleOpenEdit(movie)}
