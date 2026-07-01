@@ -40,7 +40,8 @@ export default function MovieCard({
   return (
     <Card
       sx={{
-        maxWidth: 300,
+        width: "100%",
+        maxWidth: { xs: "100%", sm: 345, md: 300 },
         height: 650,
         display: "flex",
         flexDirection: "column",

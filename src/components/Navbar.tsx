@@ -1,8 +1,6 @@
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 
@@ -10,10 +8,10 @@ export default function Navbar() {
   return (
     <AppBar position="fixed">
       <Toolbar>
-        <Container maxWidth= {false} sx={{ display: "flex" }}>
-          <Stack
-            direction="row"
+        <Container maxWidth="xl" sx={{ display: "flex" }}>
+          <Box
             sx={{
+              display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
               width: "100%",
@@ -25,8 +23,7 @@ export default function Navbar() {
                 Club
               </Box>
             </Typography>
-
-          </Stack>
+          </Box>
         </Container>
       </Toolbar>
     </AppBar>

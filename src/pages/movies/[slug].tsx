@@ -64,7 +64,9 @@ export default function MovieDetail() {
               gap: 2,
             }}
           >
-            <Typography variant="h3" sx={{ fontWeight: 700 }}>404</Typography>
+            <Typography variant="h3" sx={{ fontWeight: 700 }}>
+              404
+            </Typography>
             <Typography variant="h6" sx={{ color: "text.secondary" }}>
               This movie doesnt exist.
             </Typography>
@@ -84,10 +86,22 @@ export default function MovieDetail() {
       <Navbar />
       <Toolbar />
       <Container maxWidth="xl" sx={{ mt: 4 }}>
-        <Box sx={{ display: "flex", gap: 6, flexDirection: { xs: "column", md: "row-reverse" } }}>
-
+        <Box
+          sx={{
+            display: "flex",
+            gap: 6,
+            flexDirection: { xs: "column", md: "row-reverse" },
+          }}
+        >
           {/* Poster */}
-          <Box sx={{ position: "relative", width: { xs: "100%", md: 350 }, height: 500, flexShrink: 0 }}>
+          <Box
+            sx={{
+              position: "relative",
+              width: { xs: "100%", md: 350 },
+              height: { xs: 300, md: 500 },
+              flexShrink: 0,
+            }}
+          >
             {movie.img ? (
               <Image
                 src={movie.img}
@@ -108,7 +122,9 @@ export default function MovieDetail() {
                   justifyContent: "center",
                 }}
               >
-                <Typography sx={{ color: "text.secondary" }}>Poster not added</Typography>
+                <Typography sx={{ color: "text.secondary" }}>
+                  Poster not added
+                </Typography>
               </Box>
             )}
           </Box>
@@ -121,7 +137,11 @@ export default function MovieDetail() {
 
             {/* Genre */}
             {movie.type ? (
-              <Chip label={movie.type} color="primary" sx={{ width: "fit-content" }} />
+              <Chip
+                label={movie.type}
+                color="primary"
+                sx={{ width: "fit-content" }}
+              />
             ) : (
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
                 Genre not added
@@ -130,11 +150,17 @@ export default function MovieDetail() {
 
             {/* Rating / Coming Soon */}
             {movie.comingSoon ? (
-              <Typography variant="body1" sx={{ color: "secondary.main", fontWeight: 600 }}>
+              <Typography
+                variant="body1"
+                sx={{ color: "secondary.main", fontWeight: 600 }}
+              >
                 Coming Soon
               </Typography>
             ) : movie.rating ? (
-              <Typography variant="body1" sx={{ color: "primary.main", fontWeight: 600 }}>
+              <Typography
+                variant="body1"
+                sx={{ color: "primary.main", fontWeight: 600 }}
+              >
                 ★ {movie.rating}
               </Typography>
             ) : (
@@ -144,7 +170,10 @@ export default function MovieDetail() {
             )}
 
             {/* Description longue */}
-            <Typography variant="body1" sx={{ color: "text.secondary", lineHeight: 1.8 }}>
+            <Typography
+              variant="body1"
+              sx={{ color: "text.secondary", lineHeight: 1.8 }}
+            >
               {movie.description_long || "Description not added"}
             </Typography>
           </Box>
