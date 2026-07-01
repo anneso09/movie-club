@@ -8,17 +8,18 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { movieSchema } from "@/schemas/movie";
 
 type Movie = {
   slug: string;
   title: string;
-  description_short: string;
-  description_long: string;
-  rating: number | null;
-  type: string;
-  img: string;
-  isTrending: boolean;
-  comingSoon: boolean;
+  description_short?: string;
+  description_long?: string;
+  rating?: number | null;
+  type?: string;
+  img?: string;
+  isTrending?: boolean;
+  comingSoon?: boolean;
 };
 
 type MovieFormModalProps = {
@@ -46,25 +47,35 @@ export default function MovieFormModal({
   onSubmit,
   initialData,
 }: MovieFormModalProps) {
-  const [form, setForm] = useState<Movie>(emptyForm);
+  const [form, setForm] = useState<Movie>(initialData ?? emptyForm);
+  const [errors, setErrors] = useState<{ slug?: string; title?: string }>({});
 
-  // Pré-remplir le formulaire si on est en mode Edit
   useEffect(() => {
-    if (initialData) {
-      setForm(initialData);
-    } else {
-      setForm(emptyForm);
-    }
+    setForm(initialData ?? emptyForm);
+    setErrors({});
   }, [initialData, open]);
 
   function handleChange(field: keyof Movie, value: any) {
     setForm((prev) => ({ ...prev, [field]: value }));
+    // Efface l'erreur du champ dès que l'utilisateur tape
+    if (field === "slug" || field === "title") {
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
   }
 
   function handleSubmit() {
+    // Validation des champs obligatoires
+    const newErrors: { slug?: string; title?: string } = {};
+    if (!form.slug || form.slug.trim() === "") newErrors.slug = "Slug is required";
+    if (!form.title || form.title.trim() === "") newErrors.title = "Title is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return; // Bloque le submit
+    }
+
     const movieToSubmit = {
       ...form,
-      // Si comingSoon est coché, rating = null
       rating: form.comingSoon ? null : Number(form.rating),
     };
     onSubmit(movieToSubmit);
@@ -77,17 +88,21 @@ export default function MovieFormModal({
       <DialogContent>
         <Stack spacing={2} sx={{ mt: 1 }}>
           <TextField
-            label="Slug"
+            label="Slug *"
             value={form.slug}
             onChange={(e) => handleChange("slug", e.target.value)}
-            disabled={!!initialData} // slug non modifiable en mode Edit
+            disabled={!!initialData}
             fullWidth
+            error={!!errors.slug}
+            helperText={errors.slug}
           />
           <TextField
-            label="Title"
+            label="Title *"
             value={form.title}
             onChange={(e) => handleChange("title", e.target.value)}
             fullWidth
+            error={!!errors.title}
+            helperText={errors.title}
           />
           <TextField
             label="Short Description"
@@ -122,7 +137,7 @@ export default function MovieFormModal({
             type="number"
             value={form.rating ?? ""}
             onChange={(e) => handleChange("rating", e.target.value)}
-            disabled={form.comingSoon} // désactivé si coming soon
+            disabled={form.comingSoon}
             fullWidth
           />
           <FormControlLabel

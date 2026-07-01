@@ -1,16 +1,15 @@
-// src/schemas/movie.ts
 import { z } from "zod";
 
-export const movieSchema = z.object({ //décrit la forme attendue d'un film
-  slug: z.string(),
-  title: z.string(),
-  description_short: z.string(),
-  description_long: z.string(),
-  rating: z.number().nullable(), // accepte un number OU null
-  type: z.string(),
-  img: z.string(),
-  isTrending: z.boolean(),
-  comingSoon: z.boolean(),
+export const movieSchema = z.object({
+  slug: z.string().min(1, "Slug is required"),
+  title: z.string().min(1, "Title is required"),
+  description_short: z.string().optional(),
+  description_long: z.string().optional(),
+  rating: z.number().nullable().optional(),
+  type: z.string().optional(),
+  img: z.string().optional(),
+  isTrending: z.boolean().optional(),
+  comingSoon: z.boolean().optional(),
 });
 
 export type Movie = z.infer<typeof movieSchema>;
