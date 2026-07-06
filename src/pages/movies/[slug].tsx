@@ -86,6 +86,14 @@ export default function MovieDetail() {
       <Navbar />
       <Toolbar />
       <Container maxWidth="xl" sx={{ mt: 4 }}>
+        <Button
+              variant="contained"
+              color="primary"
+              onClick={() => router.back()}
+              sx={{ textTransform: "none", mb: 2 }}
+            >
+              Back
+            </Button>
         <Box
           sx={{
             display: "flex",
@@ -93,6 +101,7 @@ export default function MovieDetail() {
             flexDirection: { xs: "column", md: "row-reverse" },
           }}
         >
+          
           {/* Poster */}
           <Box
             sx={{
