@@ -42,7 +42,7 @@ export default function MovieCard({
       sx={{
         width: "100%",
         maxWidth: { xs: "100%", sm: 345, md: 300 },
-        height: 650,
+        height: 700,
         display: "flex",
         flexDirection: "column",
       }}
@@ -108,7 +108,7 @@ export default function MovieCard({
             {title}
           </Typography>
 
-          {/* Description courte — cachée si absente */}
+          {/* Description courte - cachée si absente */}
           {description_short && (
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
               {description_short}
@@ -124,7 +124,7 @@ export default function MovieCard({
               marginTop: "auto",
             }}
           >
-            {/* Rating / Coming Soon — caché si absent */}
+            {/* Rating / Coming Soon - caché si absent */}
             {comingSoon ? (
               <Typography variant="body2" sx={{ color: "secondary.main" }}>
                 Coming Soon
@@ -135,7 +135,7 @@ export default function MovieCard({
               </Typography>
             ) : null}
 
-            {/* Genre — caché si absent */}
+            {/* Genre - caché si absent */}
             {type && <Chip label={type} color="primary" />}
           </Stack>
         </CardContent>
