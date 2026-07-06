@@ -5,9 +5,9 @@
   "isPromoted": true,
   "movies": [
     {
-      "slug":"movie_1",
+      "slug": "movie_1",
       "title": "KPop Demon Hunters",
-      "description_short": "A fierce girl group battles ancient demons using the power of music and martial arts.",
+      "description_short": "",
       "description_long": "In the neon-lit streets of Seoul, five elite K-pop idols lead a double life — by day they dominate the charts, by night they hunt demons that prey on human emotions. Armed with enchanted microphones and centuries-old martial arts, the group must face their most dangerous enemy yet: a demon lord who feeds on the energy of concert crowds. As their fame grows, so does the threat, and the line between performance and survival begins to blur.",
       "rating": 9.5,
       "type": "Animation",
@@ -71,17 +71,6 @@
       "comingSoon": false
     },
     {
-      "slug": "movie_7",
-      "title": "Michael Jackson's This Is It",
-      "description_short": "Rare rehearsal footage reveals the making of Michael Jackson's final tour.",
-      "description_long": "Compiled from over a hundred hours of behind-the-scenes footage, this film captures Michael Jackson rehearsing for his ambitious comeback concert series, This Is It. Audiences get an intimate look at his creative process, perfectionism, and artistry, offering a poignant final glimpse of the legendary performer at work just weeks before his death.",
-      "rating": 7.1,
-      "type": "Documentary / Music",
-      "img": "/images/michael-jackson-this-is-it.jpg",
-      "isTrending": false,
-      "comingSoon": false
-    },
-    {
       "slug": "movie_8",
       "title": "Harry Potter and the Sorcerer's Stone",
       "description_short": "An orphaned boy discovers he's a wizard and begins his journey at Hogwarts.",
@@ -100,6 +89,39 @@
       "rating": 7,
       "type": "Adventure / Fantasy",
       "img": "/images/jumanji.jpg",
+      "isTrending": false,
+      "comingSoon": false
+    },
+    {
+      "slug": "",
+      "title": "",
+      "description_short": "",
+      "description_long": "",
+      "rating": 0,
+      "type": "",
+      "img": "",
+      "isTrending": false,
+      "comingSoon": false
+    },
+    {
+      "slug": "ll",
+      "title": "kkk",
+      "description_short": "",
+      "description_long": "",
+      "rating": 0,
+      "type": "",
+      "img": "",
+      "isTrending": false,
+      "comingSoon": false
+    },
+    {
+      "slug": "sdf",
+      "title": "df",
+      "description_short": "",
+      "description_long": "",
+      "rating": 0,
+      "type": "",
+      "img": "",
       "isTrending": false,
       "comingSoon": false
     }
