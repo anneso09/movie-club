@@ -14,11 +14,14 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import MovieFormModal from "@/components/MovieFormModal";
 import { movieSchema, Movie } from "@/schemas/movie";
+import Head from "next/head";
 
 export default function Home() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [open, setOpen] = useState(false);
-  const [selectedMovie, setSelectedMovie] = useState<Movie | undefined>(undefined);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | undefined>(
+    undefined,
+  );
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [slugToDelete, setSlugToDelete] = useState<string | null>(null);
 
@@ -83,21 +86,55 @@ export default function Home() {
     setOpen(true);
   }
 
+   const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: "movie club",
+    description: "movie",
+  }
   return (
     <>
+      <Head>
+        <title>Movieclub</title>
+      </Head>
       <Navbar />
       <Toolbar />
       <Hero />
       <Container maxWidth="xl">
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", my: 4 }}>
-          <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 1 }}>
-            <Box sx={{ width: 4, height: 24, bgcolor: "primary.main", borderRadius: 1 }} />
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            my: 4,
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            <Box
+              sx={{
+                width: 4,
+                height: 24,
+                bgcolor: "primary.main",
+                borderRadius: 1,
+              }}
+            />
             <Typography variant="h5" sx={{ fontWeight: 600 }}>
               Movies
             </Typography>
           </Box>
-          <Button variant="contained" color="primary" onClick={handleOpenAdd}
-          sx={{textTransform: "none"}}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleOpenAdd}
+            sx={{ textTransform: "none" }}
+          >
             + Add Movie
           </Button>
         </Box>
@@ -133,11 +170,21 @@ export default function Home() {
           <Button onClick={() => setConfirmOpen(false)} color="inherit">
             Cancel
           </Button>
-          <Button onClick={handleConfirmDelete} variant="contained" color="secondary">
+          <Button
+            onClick={handleConfirmDelete}
+            variant="contained"
+            color="secondary"
+          >
             Delete
           </Button>
         </DialogActions>
       </Dialog>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd),
+        }}
+      />
     </>
   );
 }
