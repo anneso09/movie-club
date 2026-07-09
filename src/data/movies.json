@@ -4,126 +4,14 @@
   "img": "/images/heroImg.jpg",
   "isPromoted": true,
   "movies": [
-    {
-      "slug": "movie_1",
-      "title": "KPop Demon Hunters",
-      "description_short": "",
-      "description_long": "In the neon-lit streets of Seoul, five elite K-pop idols lead a double life — by day they dominate the charts, by night they hunt demons that prey on human emotions. Armed with enchanted microphones and centuries-old martial arts, the group must face their most dangerous enemy yet: a demon lord who feeds on the energy of concert crowds. As their fame grows, so does the threat, and the line between performance and survival begins to blur.",
-      "rating": 9.5,
-      "type": "Animation",
-      "img": "/images/kpop-demon-hunters.jpg",
-      "isTrending": true,
-      "comingSoon": false
-    },
-    {
-      "slug": "movie_2",
-      "title": "Pirates of the Caribbean: Dead Man's Chest",
-      "description_short": "Jack Sparrow races to escape a blood debt owed to a legendary sea monster's master.",
-      "description_long": "Captain Jack Sparrow finds himself a hunted man, owing a blood debt to the fearsome Davy Jones, captain of the ghostly Flying Dutchman. To avoid eternal servitude, Jack enlists Will Turner and Elizabeth Swann in a desperate search for the heart of Davy Jones, all while the Kraken lurks beneath the waves, ready to drag him to a watery grave.",
-      "rating": 7.3,
-      "type": "Adventure / Fantasy",
-      "img": "/images/pirates-caribbean-2.jpg",
-      "isTrending": true,
-      "comingSoon": false
-    },
-    {
-      "slug": "movie_3",
-      "title": "Suzume",
-      "description_short": "A teenage girl helps close mysterious doors unleashing disasters across Japan.",
-      "description_long": "When Suzume stumbles upon a mysterious door in an abandoned town, she becomes entangled in a dangerous quest to stop disasters from spilling out of doors all across Japan. Joined by a young man cursed to live as a three-legged chair, she travels the country, confronting loss, memory, and the fragile balance between worlds.",
-      "rating": 8,
-      "type": "Animation / Drama",
-      "img": "/images/suzume.jpg",
-      "isTrending": false,
-      "comingSoon": false
-    },
-    {
-      "slug": "movie_4",
-      "title": "Toy Story 5",
-      "description_short": "Woody and the gang face their biggest challenge yet in a brand-new adventure.",
-      "description_long": "As Andy's old toys settle into a new chapter of their lives, an unexpected threat forces Woody, Buzz, and the rest of the gang to band together once again. Facing new rivals and a changing world, the toys must rediscover what loyalty and friendship truly mean in a story that asks how far they'll go for the kids they love.",
-      "rating": null,
-      "type": "Animation / Family",
-      "img": "/images/toy-story-5.jpg",
-      "isTrending": false,
-      "comingSoon": true
-    },
-    {
-      "slug": "movie_5",
-      "title": "Your Fault: London",
-      "description_short": "Jacobo and Noah's love is tested again as new secrets and rivals threaten their bond.",
-      "description_long": "After years apart, Jacobo and Noah find their relationship rekindled, but a move to London brings new challenges. Old wounds resurface as family secrets, jealous rivals, and the weight of their past collide, forcing them to decide whether their love can survive distance, betrayal, and the people determined to keep them apart.",
-      "rating": null,
-      "type": "Romance / Drama",
-      "img": "/images/your-fault-london.jpg",
-      "isTrending": false,
-      "comingSoon": true
-    },
-    {
-      "slug": "movie_6",
-      "title": "It",
-      "description_short": "A group of kids face a shape-shifting evil that preys on the fears of children.",
-      "description_long": "In the small town of Derry, a group of outcast kids known as the Losers' Club must confront Pennywise, a shape-shifting entity that awakens every 27 years to feed on the town's children. As their friendship is tested by fear and loss, the Losers' Club must find the courage to face their darkest nightmares together.",
-      "rating": 7.3,
-      "type": "Horror",
-      "img": "/images/it.jpg",
-      "isTrending": false,
-      "comingSoon": false
-    },
-    {
-      "slug": "movie_8",
-      "title": "Harry Potter and the Sorcerer's Stone",
-      "description_short": "An orphaned boy discovers he's a wizard and begins his journey at Hogwarts.",
-      "description_long": "On his eleventh birthday, Harry Potter discovers he is a wizard and is whisked away to Hogwarts School of Witchcraft and Wizardry. As he makes new friends and uncovers the truth about his parents' deaths, Harry must confront the dark wizard responsible, who is searching for a way to return to power through a powerful hidden stone.",
-      "rating": 7.6,
-      "type": "Fantasy / Adventure",
-      "img": "/images/harry-potter-1.jpg",
-      "isTrending": true,
-      "comingSoon": false
-    },
-    {
-      "slug": "movie_9",
-      "title": "Jumanji",
-      "description_short": "Two kids unleash a magical board game that brings the jungle to life.",
-      "description_long": "When siblings Judy and Peter discover and play a mysterious board game, they unwittingly release Alan Parrish, trapped inside for 26 years, along with the untamed jungle dangers the game commands. Together, they must finish the game to reverse its chaos, facing rampaging animals, hunters, and natural disasters threatening their town.",
-      "rating": 7,
-      "type": "Adventure / Fantasy",
-      "img": "/images/jumanji.jpg",
-      "isTrending": false,
-      "comingSoon": false
-    },
-    {
-      "slug": "",
-      "title": "",
-      "description_short": "",
-      "description_long": "",
-      "rating": 0,
-      "type": "",
-      "img": "",
-      "isTrending": false,
-      "comingSoon": false
-    },
-    {
-      "slug": "ll",
-      "title": "kkk",
-      "description_short": "",
-      "description_long": "",
-      "rating": 0,
-      "type": "",
-      "img": "",
-      "isTrending": false,
-      "comingSoon": false
-    },
-    {
-      "slug": "sdf",
-      "title": "df",
-      "description_short": "",
-      "description_long": "",
-      "rating": 0,
-      "type": "",
-      "img": "",
-      "isTrending": false,
-      "comingSoon": false
-    }
+    { "title": "Interstellar" },
+    { "title": "Pirates of the Caribbean: Dead Man's Chest" },
+    { "title": "Suzume" },
+    { "title": "Toy Story" },
+    { "title": "It" },
+    { "title": "The Dark Knight" },
+    { "title": "Harry Potter and the Sorcerer's Stone" },
+    { "title": "Jumanji" },
+    { "title": "Titanic" }
   ]
 }
