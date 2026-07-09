@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import MovieCard from "@/components/MovieCard";
 import Grid from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
@@ -37,43 +37,62 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <Fragment>
       <Head>
         <title>MovieClub</title>
+        <meta
+          name="description"
+          content="Discover, track, and explore movies that are out, trending, or coming soon."
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "MovieClub",
+              description:
+                "Discover, track, and explore movies that are out, trending, or coming soon.",
+              url: "http://localhost:3000",
+            }),
+          }}
+        />
       </Head>
       <Navbar />
       <Toolbar />
-      <Hero />
-      <Container maxWidth="xl">
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            my: 4,
-            gap: 1,
-          }}
-        >
+      <main>
+        <Hero />
+        <Container maxWidth="xl">
           <Box
             sx={{
-              width: 4,
-              height: 24,
-              bgcolor: "primary.main",
-              borderRadius: 1,
+              display: "flex",
+              alignItems: "center",
+              my: 4,
+              gap: 1,
             }}
-          />
-          <Typography variant="h5" sx={{ fontWeight: 600 }}>
-            Movies
-          </Typography>
-        </Box>
+          >
+            <Box
+              sx={{
+                width: 4,
+                height: 24,
+                bgcolor: "primary.main",
+                borderRadius: 1,
+              }}
+            />
+            <Typography variant="h5" component="h2" sx={{ fontWeight: 600 }}>
+              Movies
+            </Typography>
+          </Box>
 
-        <Grid container spacing={4}>
-          {movies.map((movie) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={movie.imdbID}>
-              <MovieCard {...movie} />
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-    </>
+          <Grid container spacing={4}>
+            {movies.map((movie) => (
+              <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={movie.imdbID}>
+                <MovieCard {...movie} />
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </main>
+    </Fragment>
   );
 }
