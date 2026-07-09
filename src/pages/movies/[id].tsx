@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -10,6 +10,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Image from "next/image";
 import { omdbMovieSchema, OmdbMovie } from "@/schemas/omdbMovie";
+
+
 
 export default function MovieDetail() {
   const router = useRouter();
@@ -36,19 +38,20 @@ export default function MovieDetail() {
 
   if (loading) {
     return (
-      <>
+      <Fragment>
+        
         <Navbar />
         <Toolbar />
         <Container maxWidth="xl">
           <Typography sx={{ mt: 4 }}>Loading...</Typography>
         </Container>
-      </>
+      </Fragment>
     );
   }
 
   if (!movie) {
     return (
-      <>
+      <Fragment>
         <Navbar />
         <Toolbar />
         <Container maxWidth="xl">
@@ -74,12 +77,12 @@ export default function MovieDetail() {
             </Link>
           </Box>
         </Container>
-      </>
+      </Fragment>
     );
   }
 
   return (
-    <>
+    <Fragment>
       <Navbar />
       <Toolbar />
       <Container maxWidth="xl" sx={{ mt: 4 }}>
@@ -169,6 +172,6 @@ export default function MovieDetail() {
           </Box>
         </Box>
       </Container>
-    </>
+    </Fragment>
   );
 }
