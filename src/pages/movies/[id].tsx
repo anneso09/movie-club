@@ -9,31 +9,30 @@ import Chip from "@mui/material/Chip";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Image from "next/image";
-import { movieSchema, Movie } from "@/schemas/movie";
+import { omdbMovieSchema, OmdbMovie } from "@/schemas/omdbMovie";
 
 export default function MovieDetail() {
   const router = useRouter();
-  const { slug } = router.query;
+  const { id } = router.query;
 
-  const [movie, setMovie] = useState<Movie | null>(null);
+  const [movie, setMovie] = useState<OmdbMovie | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!slug) return;
+    if (!id) return;
 
-    fetch("/api/movies")
+    fetch(`/api/movie/${id}`)
       .then((res) => res.json())
-      .then((data: unknown[]) => {
-        const found = data.find((m: any) => m.slug === slug);
-        if (found) {
-          const result = movieSchema.safeParse(found);
-          setMovie(result.success ? result.data : null);
-        } else {
-          setMovie(null);
-        }
+      .then((data) => {
+        const result = omdbMovieSchema.safeParse(data);
+        setMovie(result.success ? result.data : null);
+        setLoading(false);
+      })
+      .catch(() => {
+        setMovie(null);
         setLoading(false);
       });
-  }, [slug]);
+  }, [id]);
 
   if (loading) {
     return (
@@ -64,9 +63,7 @@ export default function MovieDetail() {
               gap: 2,
             }}
           >
-            <Typography variant="h3" sx={{ fontWeight: 700 }}>
-              404
-            </Typography>
+            <Typography variant="h3" sx={{ fontWeight: 700 }}>404</Typography>
             <Typography variant="h6" sx={{ color: "text.secondary" }}>
               This movie doesnt exist.
             </Typography>
@@ -86,35 +83,14 @@ export default function MovieDetail() {
       <Navbar />
       <Toolbar />
       <Container maxWidth="xl" sx={{ mt: 4 }}>
-        <Button
-              variant="contained"
-              color="primary"
-              onClick={() => router.back()}
-              sx={{ textTransform: "none", mb: 2 }}
-            >
-              Back
-            </Button>
-        <Box
-          sx={{
-            display: "flex",
-            gap: 6,
-            flexDirection: { xs: "column", md: "row-reverse" },
-          }}
-        >
-          
+        <Box sx={{ display: "flex", gap: 6, flexDirection: { xs: "column", md: "row-reverse" } }}>
+
           {/* Poster */}
-          <Box
-            sx={{
-              position: "relative",
-              width: { xs: "100%", md: 350 },
-              height: { xs: 300, md: 500 },
-              flexShrink: 0,
-            }}
-          >
-            {movie.img ? (
+          <Box sx={{ position: "relative", width: { xs: "100%", md: 350 }, height: { xs: 300, md: 500 }, flexShrink: 0 }}>
+            {movie.Poster && movie.Poster !== "N/A" ? (
               <Image
-                src={movie.img}
-                alt={movie.title}
+                src={movie.Poster}
+                alt={movie.Title}
                 fill
                 sizes="(max-width: 600px) 100vw, 350px"
                 style={{ objectFit: "cover", borderRadius: 8 }}
@@ -131,9 +107,7 @@ export default function MovieDetail() {
                   justifyContent: "center",
                 }}
               >
-                <Typography sx={{ color: "text.secondary" }}>
-                  Poster not added
-                </Typography>
+                <Typography sx={{ color: "text.secondary" }}>Poster not added</Typography>
               </Box>
             )}
           </Box>
@@ -141,50 +115,57 @@ export default function MovieDetail() {
           {/* Infos */}
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Typography variant="h3" sx={{ fontWeight: 700 }}>
-              {movie.title}
+              {movie.Title}
+            </Typography>
+
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              {movie.Year} • {movie.Runtime}
             </Typography>
 
             {/* Genre */}
-            {movie.type ? (
-              <Chip
-                label={movie.type}
-                color="primary"
-                sx={{ width: "fit-content" }}
-              />
-            ) : (
-              <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                Genre not added
+            <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+              {movie.Genre && movie.Genre !== "N/A" &&
+                movie.Genre.split(",").map((g) => (
+                  <Chip key={g.trim()} label={g.trim()} color="primary" size="small" />
+                ))
+              }
+            </Box>
+
+            {/* Rating */}
+            {movie.imdbRating && movie.imdbRating !== "N/A" && (
+              <Typography variant="body1" sx={{ color: "primary.main", fontWeight: 600 }}>
+                ★ {movie.imdbRating} / 10
               </Typography>
             )}
 
-            {/* Rating / Coming Soon */}
-            {movie.comingSoon ? (
-              <Typography
-                variant="body1"
-                sx={{ color: "secondary.main", fontWeight: 600 }}
-              >
-                Coming Soon
-              </Typography>
-            ) : movie.rating ? (
-              <Typography
-                variant="body1"
-                sx={{ color: "primary.main", fontWeight: 600 }}
-              >
-                ★ {movie.rating}
-              </Typography>
-            ) : (
-              <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                Rating not added
-              </Typography>
-            )}
-
-            {/* Description longue */}
-            <Typography
-              variant="body1"
-              sx={{ color: "text.secondary", lineHeight: 1.8 }}
-            >
-              {movie.description_long || "Description not added"}
+            {/* Plot */}
+            <Typography variant="body1" sx={{ color: "text.secondary", lineHeight: 1.8 }}>
+              {movie.Plot && movie.Plot !== "N/A" ? movie.Plot : "Description not added"}
             </Typography>
+
+            {/* Director */}
+            {movie.Director && movie.Director !== "N/A" && (
+              <Typography variant="body2">
+                <strong>Director:</strong> {movie.Director}
+              </Typography>
+            )}
+
+            {/* Actors */}
+            {movie.Actors && movie.Actors !== "N/A" && (
+              <Typography variant="body2">
+                <strong>Actors:</strong> {movie.Actors}
+              </Typography>
+            )}
+
+            <Link href="/" passHref legacyBehavior>
+              <Button
+                variant="outlined"
+                color="primary"
+                sx={{ textTransform: "none", width: "fit-content", mt: 2 }}
+              >
+                ← Back to Home
+              </Button>
+            </Link>
           </Box>
         </Box>
       </Container>
