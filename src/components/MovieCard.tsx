@@ -7,49 +7,38 @@ import CardActionArea from "@mui/material/CardActionArea";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Link from "next/link";
 
 type MovieCardProps = {
-  slug: string;
-  title: string;
-  description_short?: string;
-  rating?: number | null;
-  type?: string;
-  img?: string;
-  isTrending?: boolean;
-  comingSoon?: boolean;
-  onEdit: () => void;
-  onDelete: () => void;
+  imdbID: string;
+  Title: string;
+  Plot?: string;
+  Poster?: string;
+  imdbRating?: string;
+  Genre?: string;
 };
 
 export default function MovieCard({
-  slug,
-  title,
-  description_short,
-  rating,
-  type,
-  img,
-  isTrending,
-  comingSoon,
-  onEdit,
-  onDelete,
+  imdbID,
+  Title,
+  Plot,
+  Poster,
+  imdbRating,
+  Genre,
 }: MovieCardProps) {
   return (
     <Card
       sx={{
         width: "100%",
         maxWidth: { xs: "100%", sm: 345, md: 300 },
-        height: 700,
+        height: 650,
         display: "flex",
         flexDirection: "column",
       }}
     >
       <CardActionArea
         component={Link}
-        href={`/movies/${slug}`}
+        href={`/movies/${imdbID}`}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -61,11 +50,10 @@ export default function MovieCard({
           component="div"
           sx={{ position: "relative", height: 400, width: "100%" }}
         >
-          {/* Poster ou placeholder */}
-          {img ? (
+          {Poster && Poster !== "N/A" ? (
             <Image
-              src={img}
-              alt={title}
+              src={Poster}
+              alt={Title}
               fill
               sizes="(max-width: 600px) 100vw, 300px"
               style={{ objectFit: "cover" }}
@@ -86,32 +74,16 @@ export default function MovieCard({
               </Typography>
             </Box>
           )}
-
-          {/* Badge Trending */}
-          {isTrending && (
-            <Box
-              sx={{
-                position: "absolute",
-                inset: 8,
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "flex-start",
-              }}
-            >
-              <Chip label="Trending" color="primary" />
-            </Box>
-          )}
         </CardMedia>
 
         <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <Typography gutterBottom variant="h5" component="div">
-            {title}
+          <Typography gutterBottom variant="h6" component="div">
+            {Title}
           </Typography>
 
-          {/* Description courte - cachée si absente */}
-          {description_short && (
+          {Plot && Plot !== "N/A" && (
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              {description_short}
+              {Plot}
             </Typography>
           )}
 
@@ -124,46 +96,22 @@ export default function MovieCard({
               marginTop: "auto",
             }}
           >
-            {/* Rating / Coming Soon - caché si absent */}
-            {comingSoon ? (
-              <Typography variant="body2" sx={{ color: "secondary.main" }}>
-                Coming Soon
-              </Typography>
-            ) : rating ? (
+            {imdbRating && imdbRating !== "N/A" && (
               <Typography variant="body2" sx={{ color: "primary.main" }}>
-                ★ {rating}
+                ★ {imdbRating}
               </Typography>
-            ) : null}
+            )}
 
-            {/* Genre - caché si absent */}
-            {type && <Chip label={type} color="primary" />}
+            {Genre && Genre !== "N/A" && (
+              <Chip
+                label={Genre.split(",")[0].trim()}
+                color="primary"
+                size="small"
+              />
+            )}
           </Stack>
         </CardContent>
       </CardActionArea>
-
-      {/* Boutons Edit + Delete */}
-      <Box sx={{ display: "flex", justifyContent: "flex-end", p: 1, gap: 1 }}>
-        <IconButton
-          size="small"
-          color="primary"
-          onClick={(e) => {
-            e.stopPropagation();
-            onEdit();
-          }}
-        >
-          <EditIcon fontSize="small" />
-        </IconButton>
-        <IconButton
-          size="small"
-          color="secondary"
-          onClick={(e) => {
-            e.stopPropagation();
-            onDelete();
-          }}
-        >
-          <DeleteIcon fontSize="small" />
-        </IconButton>
-      </Box>
     </Card>
   );
 }
